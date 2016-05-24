@@ -26,11 +26,30 @@ def get_all_item():
             #print(soup.prettify())
             s = soup.find_all('script')[-2].string
 
-            td01_1 = s.index('td_01') - 10
-            td01_2 = s.index('td_01', td01_1+1) -10
-            print(td01_1)
-            print(td01_2)
-            print(s[td01_1:td01_2])
+            start = 0
+            while True:
+                try:
+                    td01_1 = s.index('td_01', start) - 12
+                    td01_2 = s.index('td_01', td01_1+13) - 55
+                except ValueError:
+                    break
+                item = s[td01_1:td01_2]
+
+                soup_item = BeautifulSoup(item)
+                #print(soup_item.prettify())
+                item= soup_item.get_text().replace('\\n', '').split()
+                print(item)
+                rank = item[0]
+                word = item[1]
+                value = item[2]
+                #rank = item[0].rtrip('\\n')
+                #word = item[1].rtrip('\\n')
+                #value = item[2].rtrip('\\n')
+                print(rank)
+                print(word.decode('unicode-escape'))
+                print(value)
+
+                start = td01_2
 
 
     except Exception as e:
