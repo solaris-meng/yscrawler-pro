@@ -17,8 +17,11 @@ INDEX = 0
 INDEX = 1
 
 QT = [
-    #{'url':'http://s.weibo.com/top/summary?cate=realtimehot','s1':'实时热搜榜'},
+    {'url':'http://s.weibo.com/top/summary?cate=realtimehot','s1':'实时热搜榜'},
     {'url':'http://s.weibo.com/top/summary?cate=total&key=friends','s1':'好友热搜榜'},
+    {'url':'http://s.weibo.com/top/summary?cate=total&key=all','s1':'热点热搜榜'},
+    {'url':'http://s.weibo.com/top/summary?cate=total&key=films','s1':'潮流热搜榜'},
+    {'url':'http://s.weibo.com/top/summary?cate=total&key=person','s1':'名人热搜榜'},
 ]
 
 def save_to_ys(i):
@@ -33,12 +36,12 @@ def save_to_ys(i):
     return 'failed'
 def get_all_item():
     try:
-        s = requests.Session()
+        session = requests.Session()
         for u in QT:
             url = u['url']
             s1 = u['s1']
 
-            r = s.get(url)
+            r = session.get(url)
             print(r.status_code)
             soup = BeautifulSoup(r.text)
             #print(soup.prettify())
@@ -62,7 +65,7 @@ def get_all_item():
 
                 i = {}
                 i['rank'] = '%d' % rank
-                i['word'] = word.decode('unicode-escape')
+                i['word'] = word.decode('unicode-escape').replace('-->','')
                 i['s1'] = s1
                 i['date_str'] = datetime.datetime.today().strftime('%Y-%m-%d')
                 uuid_str = i['date_str']+i['s1']+i['rank']
