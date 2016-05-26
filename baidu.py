@@ -27,8 +27,8 @@ QT = [
 
 def save_to_ys(i):
     try:
-        url = 'http://101.200.130.178/crawler/Weibotop/'
-        r = requests.post(url, auth=('admin', 'brotec'), json=i)
+        url = 'http://127.0.0.1:7008/crawler/Baidutop/'
+        r = requests.post(url, auth=('admin', 'brotec666'), json=i)
         return '%d' % r.status_code
     except Exception as e:
         err = traceback.format_exc()
@@ -66,7 +66,7 @@ def get_all_item():
                     i['uuid'] = hashlib.sha1(uuid_str.encode('utf-8')).hexdigest()
 
                     r = ''
-                    #r = save_to_ys(i)
+                    r = save_to_ys(i)
                     print(i['date_str']+' '+i['s1']+' '+i['rank']+' '+i['word']+' '+r)
 
                 count += 1

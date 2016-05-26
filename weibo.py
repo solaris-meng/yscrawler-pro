@@ -26,8 +26,9 @@ QT = [
 
 def save_to_ys(i):
     try:
-        url = 'http://101.200.130.178/crawler/Weibotop/'
-        r = requests.post(url, auth=('admin', 'brotec'), json=i)
+        #url = 'http://101.200.130.178/crawler/Weibotop/'
+        url = 'http://127.0.0.1:7008/crawler/Weibotop/'
+        r = requests.post(url, auth=('admin', 'brotec666'), json=i)
         return '%d' % r.status_code
     except Exception as e:
         err = traceback.format_exc()
@@ -50,6 +51,8 @@ def get_all_item():
             start = 0
             rank = 1
             while True:
+                if rank > 50:
+                    break
                 try:
                     td01_1 = s.index('td_01', start) - 12
                     td01_2 = s.index('td_01', td01_1+13) - 55
@@ -72,7 +75,7 @@ def get_all_item():
                 i['uuid'] = hashlib.sha1(uuid_str.encode('utf-8')).hexdigest()
 
                 r = ''
-                #r = save_to_ys(i)
+                r = save_to_ys(i)
                 print(i['date_str']+' '+i['s1']+' '+i['rank']+' '+i['word']+' '+r)
                 #rank = item[0].rtrip('\\n')
                 #word = item[1].rtrip('\\n')
