@@ -67,9 +67,12 @@ if __name__ == '__main__':
 
     try:
         pics = []
-        f = open("/tmp/bing.log", 'r')
-        for line in f:
-            pics.append(line.strip('\n'))
+        try:
+            f = open("/tmp/bing.log", 'r')
+            for line in f:
+                pics.append(line.strip('\n'))
+        except Exception as e:
+            pass
 
         date_str = datetime.datetime.today().strftime('%Y-%m-%d')
         if date_str not in pics:
