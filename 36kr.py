@@ -24,43 +24,27 @@ def get_all_item():
     try:
         s = requests.Session()
         url = 'http://next.36kr.com/posts'
-        print(r.status_code)
+        r = s.get(url)
         soup = BeautifulSoup(r.text)
-        '''
-            r = s.get(url)
-            lis = soup.find_all('ul', 'list-main-eventset')[1]
-            for li in lis.find_all('li'):
-                dt = li.find('i', 'cell round').find('span').string.strip()
-                url = li.find('i', 'cell pic').find('a').attrs['href'].strip()
-                name = li.find_all('p')[0].find('a').find('span').string
-                cat = li.find_all('p')[1].find_all('span')[0].find('a').string.strip()
-                location = li.find_all('p')[1].find_all('span')[1].find('a').string.strip()
-                rd = li.find_all('i', 'cell round')[1].find('a').find('span').string.strip()
-                fina = li.find('i', 'cell fina').string
+        #print(soup.prettify())
+        lis = soup.find_all('li',"item product-item ")
 
-                print(dt)
-                #print(url)
-                print(name)
-                #print(cat)
-                #print(location)
-                #print(rd)
-                #print(fina)
-                item = {}
-                item['key'] = '%s %s' % (dt, name)
-                item['dt'] = dt
-                item['url'] = url
-                item['name'] = name
-                item['cat'] = cat
-                item['location'] = location
-                item['rd'] = rd
-                item['fina'] = fina
-                item['des'] = get_des(url)
+        for i in lis:
+            print(i.find('a', "post-url").text)
+            print(i.find('a', "post-url")['href'])
+            print(i.find('span', "post-tagline").text)
+            print(i.find('span', "vote-count").text)
 
-                url = 'http://meng.wiki/crawler/Itjuzi/'
-                r = requests.post(url, auth=('admin', 'anmeng88'), json=item)
-                status_code = r.status_code
-                print('%d' % status_code)
-        '''
+            item = {}
+            item['url'] = i.find('a', "post-url")['href']
+            item['name'] = i.find('a', "post-url").text
+            item['des'] = i.find('span', "post-tagline").text
+            item['vote'] = i.find('span', "vote-count").text
+
+            url = 'http://meng.wiki/crawler/Krnext/'
+            r = requests.post(url, auth=('admin', 'anmeng88'), json=item)
+            status_code = r.status_code
+            print('%d' % status_code)
 
     except Exception as e:
         err = traceback.format_exc()
