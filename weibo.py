@@ -26,9 +26,9 @@ QT = [
 
 def save_to_ys(i):
     try:
-        #url = 'http://101.200.130.178/crawler/Weibotop/'
-        url = 'http://127.0.0.1:7008/crawler/Weibotop/'
-        r = requests.post(url, auth=('admin', 'brotec666'), json=i)
+        url = 'http://101.200.130.178/crawler/Weibotop/'
+        #url = 'http://127.0.0.1:7008/crawler/Weibotop/'
+        r = requests.post(url, auth=('admin', 'brotec'), json=i)
         return '%d' % r.status_code
     except Exception as e:
         err = traceback.format_exc()

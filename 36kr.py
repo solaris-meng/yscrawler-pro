@@ -23,11 +23,11 @@ def get_des(url):
 def get_all_item():
     try:
         s = requests.Session()
-        for i in range(1, 3):
-            url = 'https://www.itjuzi.com/investevents?page=%d' % i
+        url = 'http://next.36kr.com/posts'
+        print(r.status_code)
+        soup = BeautifulSoup(r.text)
+        '''
             r = s.get(url)
-            print(r.status_code)
-            soup = BeautifulSoup(r.text)
             lis = soup.find_all('ul', 'list-main-eventset')[1]
             for li in lis.find_all('li'):
                 dt = li.find('i', 'cell round').find('span').string.strip()
@@ -60,6 +60,7 @@ def get_all_item():
                 r = requests.post(url, auth=('admin', 'anmeng88'), json=item)
                 status_code = r.status_code
                 print('%d' % status_code)
+        '''
 
     except Exception as e:
         err = traceback.format_exc()
